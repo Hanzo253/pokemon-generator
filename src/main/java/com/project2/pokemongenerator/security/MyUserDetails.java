@@ -1,4 +1,7 @@
 package com.project2.pokemongenerator.security;
 
-public class MyUserDetails {
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class MyUserDetails implements UserDetails {
+
 }
