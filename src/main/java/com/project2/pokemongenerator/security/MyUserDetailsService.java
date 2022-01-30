@@ -23,7 +23,7 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("Username not found in database");
         }
-        
+
         return new MyUserDetails(user);
     }
 }
