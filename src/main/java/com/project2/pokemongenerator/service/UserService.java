@@ -1,6 +1,8 @@
 package com.project2.pokemongenerator.service;
 
 import com.project2.pokemongenerator.exceptions.InformationExistsException;
+import com.project2.pokemongenerator.model.Request.LoginRequest;
+import com.project2.pokemongenerator.model.Response.LoginResponse;
 import com.project2.pokemongenerator.model.User;
 import com.project2.pokemongenerator.repository.UserRepository;
 import com.project2.pokemongenerator.security.jwt.JWTUtils;
@@ -54,6 +56,15 @@ public class UserService {
         } else {
             throw new InformationExistsException("user with email address " + userObject.getEmailAddress() + " already exists");
         }
+    }
+
+    // checks if user login information is correct and returns the jwt key
+    public ResponseEntity<?> loginUser(LoginRequest loginRequest){
+        System.out.println("service calling loginUser ==>");
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+        final String JWT = jwtUtils.generateToken(userDetails);
+        return ResponseEntity.ok(new LoginResponse(JWT));
     }
 
     public User findUserByEmailAddress(String email) {
