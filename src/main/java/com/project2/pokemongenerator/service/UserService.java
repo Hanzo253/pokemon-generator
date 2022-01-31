@@ -54,7 +54,7 @@ public class UserService {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);
         } else {
-            throw new InformationExistsException("user with email address " + userObject.getEmailAddress() + " already exists");
+            throw new InformationExistsException("user with email address " + userObject.getEmailAddress() + " already exists.");
         }
     }
 
