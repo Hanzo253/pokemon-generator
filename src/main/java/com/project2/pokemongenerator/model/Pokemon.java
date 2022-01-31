@@ -103,28 +103,28 @@ public class Pokemon {
         this.moves = moves;
     }
 
-    public boolean isLegendary() {
+    public boolean getIsLegendary() {
         return isLegendary;
     }
 
-    public void setLegendary(boolean legendary) {
-        isLegendary = legendary;
+    public void setIsLegendary(boolean isLegendary) {
+        this.isLegendary = isLegendary;
     }
 
-    public boolean isShiny() {
+    public boolean getIsShiny() {
         return isShiny;
     }
 
-    public void setShiny(boolean shiny) {
-        isShiny = shiny;
+    public void setIsShiny(boolean isShiny) {
+        this.isShiny = isShiny;
     }
 
-    public boolean isFavorite() {
+    public boolean getIsFavorite() {
         return isFavorite;
     }
 
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
     }
 
     @Override
