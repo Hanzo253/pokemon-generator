@@ -57,12 +57,23 @@ public class PokemonService {
         }
     }
 
-//    public Pokemon updatePokemon(Long pokemonId, @RequestBody Pokemon pokemonObject) {
-//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
-//
-//        if (pokemon == null) {
-//            throw new InformationNotFoundException();
-//        }
-//    }
+    public Pokemon updatePokemon(Long pokemonId, @RequestBody Pokemon pokemonObject) {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
+
+        if (pokemon == null) {
+            throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found");
+        } else {
+            pokemon.setUser(userDetails.getUser());
+            pokemon.setName(pokemonObject.getName());
+            pokemon.setType(pokemonObject.getType());
+            pokemon.setGender(pokemonObject.getGender());
+            pokemon.setGeneration(pokemonObject.getGeneration());
+            pokemon.setMoves(pokemonObject.getMoves());
+            pokemon.setIsLegendary(pokemonObject.getIsLegendary());
+            pokemon.setIsShiny(pokemonObject.getIsShiny());
+            pokemon.setIsFavorite(pokemonObject.getIsFavorite());
+            return pokemonRepository.save(pokemon);
+        }
+    }
 }
