@@ -1,5 +1,6 @@
 package com.project2.pokemongenerator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -38,6 +39,11 @@ public class Pokemon {
 
     @Column
     private boolean isFavorite;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     public Pokemon() {
 
@@ -125,6 +131,14 @@ public class Pokemon {
 
     public void setIsFavorite(boolean isFavorite) {
         this.isFavorite = isFavorite;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
