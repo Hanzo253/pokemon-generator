@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 public class PokemonService {
-    @Autowired
+//    @Autowired
     private PokemonRepository pokemonRepository;
 
     @Autowired
