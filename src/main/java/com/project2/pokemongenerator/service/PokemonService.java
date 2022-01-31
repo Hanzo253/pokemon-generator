@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PokemonService {
@@ -42,6 +43,16 @@ public class PokemonService {
             throw new InformationNotFoundException("no pokemon found for user id " + userDetails.getUser().getId() + " not found.");
         } else {
             return pokemons;
+        }
+    }
+
+    public Optional<Pokemon> getPokemon(Long pokemonId) {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
+        if (pokemon == null) {
+            throw new InformationNotFoundException("pokemon with id " + pokemonId + "not found.");
+        } else {
+            return Optional.ofNullable(pokemon);
         }
     }
 }

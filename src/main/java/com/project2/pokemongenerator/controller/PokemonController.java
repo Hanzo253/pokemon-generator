@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/api") // means http://localhost:9092/api/
@@ -27,5 +28,10 @@ public class PokemonController {
     public List<Pokemon> getAllPokemon() {
         System.out.println("getting all pokemon...");
         return pokemonService.getAllPokemon();
+    }
+
+    @GetMapping("/pokemon/{pokemonId}")
+    public Optional<Pokemon> getPokemon(@PathVariable(value = "pokemonId") Long pokemonId) {
+        return pokemonService.getPokemon(pokemonId);
     }
 }
