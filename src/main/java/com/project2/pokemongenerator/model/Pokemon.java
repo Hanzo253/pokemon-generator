@@ -37,4 +37,20 @@ public class Pokemon {
 
     @Column
     private boolean isFavorite;
+
+    public Pokemon() {
+
+    }
+
+    public Pokemon(Long id, String name, String type, String gender, int generation, String[] moves, boolean isLegendary, boolean isShiny, boolean isFavorite) {
+        this.id = id;
+        this.name = name;
+        this.type = type;
+        this.gender = gender;
+        this.generation = generation;
+        this.moves = moves;
+        this.isLegendary = isLegendary;
+        this.isShiny = isShiny;
+        this.isFavorite = isFavorite;
+    }
 }
