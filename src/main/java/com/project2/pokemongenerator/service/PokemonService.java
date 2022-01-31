@@ -9,6 +9,7 @@ import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,4 +56,13 @@ public class PokemonService {
             return Optional.ofNullable(pokemon);
         }
     }
+
+//    public Pokemon updatePokemon(Long pokemonId, @RequestBody Pokemon pokemonObject) {
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
+//
+//        if (pokemon == null) {
+//            throw new InformationNotFoundException();
+//        }
+//    }
 }

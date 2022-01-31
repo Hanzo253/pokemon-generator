@@ -32,6 +32,12 @@ public class PokemonController {
 
     @GetMapping("/pokemon/{pokemonId}")
     public Optional<Pokemon> getPokemon(@PathVariable(value = "pokemonId") Long pokemonId) {
+        System.out.println("getting pokemon with an id of " + pokemonId);
         return pokemonService.getPokemon(pokemonId);
     }
+
+//    @PutMapping("/pokemon/{pokemonId}")
+//    public Pokemon updatePokemon(@PathVariable(value = "pokemonId") Long pokemonId, @RequestBody Pokemon pokemonObject) {
+//        System.out.println("updating pokemon with an id of \" + pokemonId");
+//    }
 }

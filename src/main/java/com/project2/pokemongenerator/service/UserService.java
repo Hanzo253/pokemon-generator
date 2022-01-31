@@ -60,7 +60,6 @@ public class UserService {
 
     // checks if user login information is correct and returns the jwt key
     public ResponseEntity<?> loginUser(LoginRequest loginRequest){
-        System.out.println("service calling loginUser ==>");
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         final String JWT = jwtUtils.generateToken(userDetails);
