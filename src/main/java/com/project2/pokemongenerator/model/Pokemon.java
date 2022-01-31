@@ -1,13 +1,16 @@
 package com.project2.pokemongenerator.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.vladmihalcea.hibernate.type.array.StringArrayType;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Arrays;
 
 @Entity
 @Table(name = "pokemon")
+@TypeDef(name = "string-array", typeClass = StringArrayType.class)
 public class Pokemon {
 
     @Id
