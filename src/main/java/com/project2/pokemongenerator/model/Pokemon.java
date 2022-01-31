@@ -3,6 +3,7 @@ package com.project2.pokemongenerator.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "pokemon")
@@ -52,5 +53,92 @@ public class Pokemon {
         this.isLegendary = isLegendary;
         this.isShiny = isShiny;
         this.isFavorite = isFavorite;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getGeneration() {
+        return generation;
+    }
+
+    public void setGeneration(int generation) {
+        this.generation = generation;
+    }
+
+    public String[] getMoves() {
+        return moves;
+    }
+
+    public void setMoves(String[] moves) {
+        this.moves = moves;
+    }
+
+    public boolean isLegendary() {
+        return isLegendary;
+    }
+
+    public void setLegendary(boolean legendary) {
+        isLegendary = legendary;
+    }
+
+    public boolean isShiny() {
+        return isShiny;
+    }
+
+    public void setShiny(boolean shiny) {
+        isShiny = shiny;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
+
+    @Override
+    public String toString() {
+        return "Pokemon{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", gender='" + gender + '\'' +
+                ", generation=" + generation +
+                ", moves=" + Arrays.toString(moves) +
+                ", isLegendary=" + isLegendary +
+                ", isShiny=" + isShiny +
+                ", isFavorite=" + isFavorite +
+                '}';
     }
 }
