@@ -76,4 +76,16 @@ public class PokemonService {
             return pokemonRepository.save(pokemon);
         }
     }
+
+    public Pokemon updatePokemonMoves(Long pokemonId, @RequestBody Pokemon pokemonObject) {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
+
+        if (pokemon == null) {
+            throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found");
+        } else {
+            pokemon.setMoves(pokemonObject.getMoves());
+            return pokemonRepository.save(pokemon);
+        }
+    }
 }
