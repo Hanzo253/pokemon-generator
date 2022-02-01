@@ -3,6 +3,7 @@ package com.project2.pokemongenerator.controller;
 import com.project2.pokemongenerator.model.Pokemon;
 import com.project2.pokemongenerator.service.PokemonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,5 +47,12 @@ public class PokemonController {
     public Pokemon updatePokemonMoves(@PathVariable(value = "pokemonId") Long pokemonId, @RequestBody Pokemon pokemonObject) {
         System.out.println("updating pokemon's moves with an id of " + pokemonId);
         return pokemonService.updatePokemonMoves(pokemonId, pokemonObject);
+    }
+
+    @DeleteMapping("/pokemon/{pokemonId}")
+    public ResponseEntity<?> deletePokemon(@PathVariable(value = "pokemonId") Long pokemonId) {
+        System.out.println("deleting pokemon with id " + pokemonId);
+        pokemonService.deletePokemon(pokemonId);
+        return ResponseEntity.ok().build();
     }
 }
