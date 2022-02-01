@@ -5,6 +5,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,6 +44,16 @@ public class User {
         this.userName = userName;
         this.emailAddress = emailAddress;
         this.password = password;
+    }
+
+    public List<Pokemon> addFavoritePokemon(Pokemon pokemon) {
+        if (favoritePokemonList == null) {
+            favoritePokemonList = new ArrayList<>();
+        }
+
+        favoritePokemonList.add(pokemon);
+
+        return favoritePokemonList;
     }
 
     public Long getId() {

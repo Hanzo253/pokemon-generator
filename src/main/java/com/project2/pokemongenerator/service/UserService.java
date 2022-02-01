@@ -1,9 +1,11 @@
 package com.project2.pokemongenerator.service;
 
 import com.project2.pokemongenerator.exceptions.InformationExistsException;
+import com.project2.pokemongenerator.model.Pokemon;
 import com.project2.pokemongenerator.model.Request.LoginRequest;
 import com.project2.pokemongenerator.model.Response.LoginResponse;
 import com.project2.pokemongenerator.model.User;
+import com.project2.pokemongenerator.repository.PokemonRepository;
 import com.project2.pokemongenerator.repository.UserRepository;
 import com.project2.pokemongenerator.security.jwt.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements FavoritePokemon {
     private UserRepository userRepository;
+    private PokemonRepository pokemonRepository;
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private UserDetailsService userDetailsService;
@@ -26,6 +29,11 @@ public class UserService {
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setPokemonRepository(PokemonRepository pokemonRepository) {
+        this.pokemonRepository = pokemonRepository;
     }
 
     @Autowired
@@ -68,5 +76,19 @@ public class UserService {
 
     public User findUserByEmailAddress(String email) {
         return userRepository.findUserByEmailAddress(email);
+    }
+
+    @Override
+    public User getUser(String userEmailAddress) {
+        return userRepository.findUserByEmailAddress(userEmailAddress);
+    }
+
+    @Override
+    public User addFavoritePokemon(String userEmailAddress, Long pokemonId) {
+        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
+        User user = getUser(userEmailAddress);
+        user.addFavoritePokemon(pokemon);
+
+        return userRepository.save(user);
     }
 }
