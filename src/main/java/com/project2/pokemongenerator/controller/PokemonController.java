@@ -50,9 +50,9 @@ public class PokemonController {
     }
 
     @DeleteMapping("/pokemon/{pokemonId}")
-    public ResponseEntity<?> deletePokemon(@PathVariable(value = "pokemonId") Long pokemonId) {
+    public ResponseEntity<String> deletePokemon(@PathVariable(value = "pokemonId") Long pokemonId) {
         System.out.println("deleting pokemon with id " + pokemonId);
         pokemonService.deletePokemon(pokemonId);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("Deleting pokemon with id " + pokemonId);
     }
 }

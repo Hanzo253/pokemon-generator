@@ -7,6 +7,7 @@ import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Arrays;
+import java.util.List;
 
 @Entity
 @Table(name = "pokemon")
@@ -47,6 +48,10 @@ public class Pokemon {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "favorite_pokemon", joinColumns = {@JoinColumn(name = "pokemon_id")}, inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<User> users;
 
     public Pokemon() {
 
@@ -142,6 +147,14 @@ public class Pokemon {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     @Override

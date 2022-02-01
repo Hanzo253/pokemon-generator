@@ -30,6 +30,10 @@ public class User {
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<Pokemon> pokemonList;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "favorite_pokemon", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = @JoinColumn(name = "pokemon_id"))
+    private List<Pokemon> favoritePokemonList;
+
     public User() {
 
     }
@@ -79,6 +83,14 @@ public class User {
 
     public void setPokemonList(List<Pokemon> pokemonList) {
         this.pokemonList = pokemonList;
+    }
+
+    public List<Pokemon> getFavoritePokemonList() {
+        return favoritePokemonList;
+    }
+
+    public void setFavoritePokemonList(List<Pokemon> favoritePokemonList) {
+        this.favoritePokemonList = favoritePokemonList;
     }
 
     @Override
