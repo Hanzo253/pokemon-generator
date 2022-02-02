@@ -5,7 +5,6 @@ import com.project2.pokemongenerator.exceptions.InformationNotFoundException;
 import com.project2.pokemongenerator.model.Pokemon;
 import com.project2.pokemongenerator.repository.PokemonRepository;
 import com.project2.pokemongenerator.security.MyUserDetails;
-import jdk.jfr.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -78,6 +77,7 @@ public class PokemonService {
             pokemon.setMoves(pokemonObject.getMoves());
             pokemon.setIsLegendary(pokemonObject.getIsLegendary());
             pokemon.setIsShiny(pokemonObject.getIsShiny());
+            pokemon.setPokemonImage(pokemonObject.getPokemonImage());
             return pokemonRepository.save(pokemon);
         }
     }
