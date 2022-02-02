@@ -1,5 +1,6 @@
 package com.project2.pokemongenerator.controller;
 
+import com.project2.pokemongenerator.exceptions.InformationNotFoundException;
 import com.project2.pokemongenerator.model.Pokemon;
 import com.project2.pokemongenerator.model.User;
 import com.project2.pokemongenerator.service.PokemonService;

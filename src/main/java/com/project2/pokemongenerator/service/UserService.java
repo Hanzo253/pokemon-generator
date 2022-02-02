@@ -18,6 +18,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -94,9 +95,14 @@ public class UserService implements FavoritePokemon {
     public User addFavoritePokemon(String username, Long pokemonId) {
         Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
         User user = getUser(username);
+        if (user == null) {
+            throw new InformationNotFoundException("username of " + username + " not found.");
+        }
+//        System.out.println(user);
+//        System.out.println(username);
         ArrayList<String> pokemonAdded = new ArrayList<>();
-        System.out.println(pokemon.getUser().getUserName());
-        System.out.println(user.getUserName());
+//        System.out.println(pokemon.getUser().getUserName());
+//        System.out.println(user.getUserName());
         for (int i = 0; i < user.getFavoritePokemonListSize(); i++) {
             pokemonAdded.add(pokemon.getName());
             if (pokemon.getName().equals(pokemonAdded.get(i))) {

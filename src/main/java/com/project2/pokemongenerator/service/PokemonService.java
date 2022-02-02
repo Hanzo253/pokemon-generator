@@ -57,7 +57,7 @@ public class PokemonService {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
         if (pokemon == null) {
-            throw new InformationNotFoundException("pokemon with id " + pokemonId + "not found.");
+            throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
         } else {
             return Optional.ofNullable(pokemon);
         }
