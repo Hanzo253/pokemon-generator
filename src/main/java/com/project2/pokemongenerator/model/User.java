@@ -1,5 +1,6 @@
 package com.project2.pokemongenerator.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -104,6 +105,7 @@ public class User {
         this.favoritePokemonList = favoritePokemonList;
     }
 
+    @JsonIgnore
     public int getFavoritePokemonListSize() {
         return favoritePokemonList.size();
     }

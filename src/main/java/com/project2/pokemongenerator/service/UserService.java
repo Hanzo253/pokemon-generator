@@ -1,5 +1,6 @@
 package com.project2.pokemongenerator.service;
 
+import com.project2.pokemongenerator.exceptions.IncorrectUserException;
 import com.project2.pokemongenerator.exceptions.InformationExistsException;
 import com.project2.pokemongenerator.exceptions.InformationNotFoundException;
 import com.project2.pokemongenerator.model.Pokemon;
@@ -94,12 +95,16 @@ public class UserService implements FavoritePokemon {
         Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
         User user = getUser(username);
         ArrayList<String> pokemonAdded = new ArrayList<>();
-        for (int i = 0; i <= user.getFavoritePokemonListSize(); i++) {
-//            pokemonAdded[i] = pokemon.getName();
+        System.out.println(pokemon.getUser().getUserName());
+        System.out.println(user.getUserName());
+        for (int i = 0; i < user.getFavoritePokemonListSize(); i++) {
             pokemonAdded.add(pokemon.getName());
             if (pokemon.getName().equals(pokemonAdded.get(i))) {
                 throw new InformationExistsException("pokemon with name " + pokemon.getName() + " already exists in this list.");
-            }  // else if (pokemon.getUser().toString() != user.getUserName()) {}
+            }
+        }
+        if (pokemon.getUser().getUserName() != user.getUserName()) {
+            throw new IncorrectUserException("This pokemon does not belong to the user " + username);
         }
 //        System.out.println(pokemonAdded);
         user.addFavoritePokemon(pokemon);
