@@ -41,9 +41,4 @@ public class UserController {
         System.out.println("calling loginUser");
         return userService.loginUser(loginRequest);
     }
-
-    @PutMapping("/{username}/{pokemonId}")
-    public User addFavoritePokemon(@PathVariable String username, @PathVariable Long pokemonId) {
-        return userService.addFavoritePokemon(username, pokemonId);
-    }
 }
