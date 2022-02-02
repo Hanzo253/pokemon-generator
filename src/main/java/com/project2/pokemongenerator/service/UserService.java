@@ -106,11 +106,14 @@ public class UserService implements FavoritePokemon {
     }
 
     public void deleteUserById(Long userId) {
-        System.out.println(userRepository.findById(userId));
         if (userRepository.findById(userId).isEmpty()) {
             throw new InformationNotFoundException("User not found.");
         } else {
-            userRepository.deleteById(userId);
+            if (!userRepository.findById(userId).get().getPokemonList().isEmpty()) {
+                throw new InformationExistsException("User needs to empty their pokemonList and favoritePokemonList in order to be deleted");
+            } else {
+                userRepository.deleteById(userId);
+            }
         }
     }
 
