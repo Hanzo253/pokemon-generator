@@ -89,11 +89,19 @@ public class UserService implements FavoritePokemon {
 
     @Override
     public User getUser(String username) {
-        return userRepository.findUserByUserName(username);
+        if (userRepository.findUserByUserName(username) == null) {
+            throw new InformationNotFoundException("User not found.");
+        } else {
+            return userRepository.findUserByUserName(username);
+        }
     }
 
     public Iterable<User> listUsers() {
-        return userRepository.findAll();
+        if (userRepository.findAll().size() == 0) {
+            throw new InformationNotFoundException("No users found.");
+        } else {
+            return userRepository.findAll();
+        }
     }
 
     @Override
