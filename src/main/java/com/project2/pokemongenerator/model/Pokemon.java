@@ -41,9 +41,6 @@ public class Pokemon {
     @Column
     private boolean isShiny;
 
-    @Column
-    private boolean isFavorite;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -58,7 +55,7 @@ public class Pokemon {
 
     }
 
-    public Pokemon(Long id, String name, String type, String gender, int generation, String[] moves, boolean isLegendary, boolean isShiny, boolean isFavorite) {
+    public Pokemon(Long id, String name, String type, String gender, int generation, String[] moves, boolean isLegendary, boolean isShiny) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -67,7 +64,6 @@ public class Pokemon {
         this.moves = moves;
         this.isLegendary = isLegendary;
         this.isShiny = isShiny;
-        this.isFavorite = isFavorite;
     }
 
     public Long getId() {
@@ -134,14 +130,6 @@ public class Pokemon {
         this.isShiny = isShiny;
     }
 
-    public boolean getIsFavorite() {
-        return isFavorite;
-    }
-
-    public void setIsFavorite(boolean isFavorite) {
-        this.isFavorite = isFavorite;
-    }
-
     public User getUser() {
         return user;
     }
@@ -169,7 +157,8 @@ public class Pokemon {
                 ", moves=" + Arrays.toString(moves) +
                 ", isLegendary=" + isLegendary +
                 ", isShiny=" + isShiny +
-                ", isFavorite=" + isFavorite +
+                ", user=" + user +
+                ", users=" + users +
                 '}';
     }
 }

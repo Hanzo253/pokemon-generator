@@ -8,5 +8,6 @@ import java.util.List;
 public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
     List<Pokemon> findByUserId(Long userId);
     Pokemon findByUserIdAndName(Long userId, String name);
-    Pokemon findByIdAndUserId(Long categoryId, Long id);
+    Pokemon findByIdAndUserId(Long pokemonId, Long id);
+//    Pokemon findByIdAndUserIdAndName(Long pokemonId, Long userId, String name);
 }

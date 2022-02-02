@@ -1,17 +1,20 @@
 package com.project2.pokemongenerator.service;
 
 import com.project2.pokemongenerator.exceptions.InformationExistsException;
+import com.project2.pokemongenerator.exceptions.InformationNotFoundException;
 import com.project2.pokemongenerator.model.Pokemon;
 import com.project2.pokemongenerator.model.Request.LoginRequest;
 import com.project2.pokemongenerator.model.Response.LoginResponse;
 import com.project2.pokemongenerator.model.User;
 import com.project2.pokemongenerator.repository.PokemonRepository;
 import com.project2.pokemongenerator.repository.UserRepository;
+import com.project2.pokemongenerator.security.MyUserDetails;
 import com.project2.pokemongenerator.security.jwt.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -85,7 +88,14 @@ public class UserService implements FavoritePokemon {
 
     @Override
     public User addFavoritePokemon(String username, Long pokemonId) {
-        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
+//        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
+//        if (pokemon == null) {
+//            throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found");
+//        } else if () {
+//
+//        }
         User user = getUser(username);
         user.addFavoritePokemon(pokemon);
 
