@@ -104,6 +104,10 @@ public class User {
         this.favoritePokemonList = favoritePokemonList;
     }
 
+    public int getFavoritePokemonListSize() {
+        return favoritePokemonList.size();
+    }
+
     @Override
     public String toString() {
         return "User{" +

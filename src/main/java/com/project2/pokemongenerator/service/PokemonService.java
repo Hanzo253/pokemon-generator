@@ -78,7 +78,6 @@ public class PokemonService {
             pokemon.setMoves(pokemonObject.getMoves());
             pokemon.setIsLegendary(pokemonObject.getIsLegendary());
             pokemon.setIsShiny(pokemonObject.getIsShiny());
-            pokemon.setIsFavorite(pokemonObject.getIsFavorite());
             return pokemonRepository.save(pokemon);
         }
     }
