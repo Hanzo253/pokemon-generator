@@ -42,8 +42,8 @@ public class UserController {
         return userService.loginUser(loginRequest);
     }
 
-    @PutMapping("/{userEmailAddress}/{pokemonId}")
-    public User addFavoritePokemon(@PathVariable String userEmailAddress, @PathVariable Long pokemonId) {
-        return userService.addFavoritePokemon(userEmailAddress, pokemonId);
+    @PutMapping("/{username}/{pokemonId}")
+    public User addFavoritePokemon(@PathVariable String username, @PathVariable Long pokemonId) {
+        return userService.addFavoritePokemon(username, pokemonId);
     }
 }

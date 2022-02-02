@@ -79,14 +79,14 @@ public class UserService implements FavoritePokemon {
     }
 
     @Override
-    public User getUser(String userEmailAddress) {
-        return userRepository.findUserByEmailAddress(userEmailAddress);
+    public User getUser(String username) {
+        return userRepository.findUserByUserName(username);
     }
 
     @Override
-    public User addFavoritePokemon(String userEmailAddress, Long pokemonId) {
+    public User addFavoritePokemon(String username, Long pokemonId) {
         Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
-        User user = getUser(userEmailAddress);
+        User user = getUser(username);
         user.addFavoritePokemon(pokemon);
 
         return userRepository.save(user);
