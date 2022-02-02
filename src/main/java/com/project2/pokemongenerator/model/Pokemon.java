@@ -51,6 +51,7 @@ public class Pokemon {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(name = "favorite_pokemon", joinColumns = {@JoinColumn(name = "pokemon_id")}, inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @JsonIgnore
     private List<User> users;
 
     public Pokemon() {

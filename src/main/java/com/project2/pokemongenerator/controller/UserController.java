@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth/users")
@@ -43,5 +40,10 @@ public class UserController {
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
         System.out.println("calling loginUser");
         return userService.loginUser(loginRequest);
+    }
+
+    @PutMapping("/{userEmailAddress}/{pokemonId}")
+    public User addFavoritePokemon(@PathVariable String userEmailAddress, @PathVariable Long pokemonId) {
+        return userService.addFavoritePokemon(userEmailAddress, pokemonId);
     }
 }

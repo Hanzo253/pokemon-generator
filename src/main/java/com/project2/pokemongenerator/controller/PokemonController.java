@@ -14,22 +14,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api") // means http://localhost:9092/api/
 public class PokemonController {
-    private UserService userService;
     private PokemonService pokemonService;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
     @Autowired
     public void setPokemonService(PokemonService pokemonService) {
         this.pokemonService = pokemonService;
     }
-
-//    public User addFavoritePokemon(String userEmailAddress, Long pokemonId) {
-//        if ()
-//    }
 
     @PostMapping("/pokemon/")
     public Pokemon createPokemon(@RequestBody Pokemon pokemonObject) {

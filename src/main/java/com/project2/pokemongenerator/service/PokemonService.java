@@ -18,10 +18,16 @@ import java.util.Optional;
 public class PokemonService {
 //    @Autowired
     private PokemonRepository pokemonRepository;
+    private UserService userService;
 
     @Autowired
     public void setPokemonRepository(PokemonRepository pokemonRepository) {
         this.pokemonRepository = pokemonRepository;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public Pokemon createPokemon(Pokemon pokemonObject) {
