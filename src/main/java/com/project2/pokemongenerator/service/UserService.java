@@ -12,6 +12,7 @@ import com.project2.pokemongenerator.repository.UserRepository;
 import com.project2.pokemongenerator.security.MyUserDetails;
 import com.project2.pokemongenerator.security.jwt.JWTUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -102,6 +103,11 @@ public class UserService implements FavoritePokemon {
         } else {
             return userRepository.findAll();
         }
+    }
+
+    public HttpStatus deleteUserById(Long userId) {
+        userRepository.deleteById(userId);
+        return HttpStatus.OK;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.project2.pokemongenerator.model.Request.LoginRequest;
 import com.project2.pokemongenerator.model.User;
 import com.project2.pokemongenerator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,5 +51,10 @@ public class UserController {
     @GetMapping("/{username}")
     public User getUser(@PathVariable String username) {
         return userService.getUser(username);
+    }
+
+    @DeleteMapping("/{userId}")
+    public HttpStatus deleteUser(@PathVariable Long userId) {
+        return userService.deleteUserById(userId);
     }
 }
