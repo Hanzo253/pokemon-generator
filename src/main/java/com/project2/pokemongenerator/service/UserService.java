@@ -91,11 +91,8 @@ public class UserService implements FavoritePokemon {
 
     @Override
     public User addFavoritePokemon(String username, Long pokemonId) {
-//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        Pokemon pokemon = pokemonRepository.findByIdAndName(pokemonId, pokemonObject.getName());
         Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
         User user = getUser(username);
-//        String[] pokemonAdded = new String[user.getFavoritePokemonListSize()];
         ArrayList<String> pokemonAdded = new ArrayList<>();
         for (int i = 0; i <= user.getFavoritePokemonListSize(); i++) {
 //            pokemonAdded[i] = pokemon.getName();
@@ -106,7 +103,6 @@ public class UserService implements FavoritePokemon {
         }
 //        System.out.println(pokemonAdded);
         user.addFavoritePokemon(pokemon);
-//        Arrays.fill(pokemonAdded, null);
         pokemonAdded.clear();
 //        System.out.println(pokemonAdded);
         return userRepository.save(user);
