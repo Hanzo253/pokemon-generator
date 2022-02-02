@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class UserService implements FavoritePokemon {
@@ -93,29 +94,36 @@ public class UserService implements FavoritePokemon {
 
     @Override
     public User addFavoritePokemon(String username, Long pokemonId) {
-        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
+        if (pokemon == null) {
+            throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
+        }
+//        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
         User user = getUser(username);
         if (user == null) {
             throw new InformationNotFoundException("username of " + username + " not found.");
         }
-//        System.out.println(user);
-//        System.out.println(username);
-        ArrayList<String> pokemonAdded = new ArrayList<>();
-//        System.out.println(pokemon.getUser().getUserName());
-//        System.out.println(user.getUserName());
-        for (int i = 0; i < user.getFavoritePokemonListSize(); i++) {
-            pokemonAdded.add(pokemon.getName());
-            if (pokemon.getName().equals(pokemonAdded.get(i))) {
-                throw new InformationExistsException("pokemon with name " + pokemon.getName() + " already exists in this list.");
-            }
-        }
         if (pokemon.getUser().getUserName() != user.getUserName()) {
             throw new IncorrectUserException("This pokemon does not belong to the user " + username);
         }
-//        System.out.println(pokemonAdded);
-        user.addFavoritePokemon(pokemon);
-        pokemonAdded.clear();
-//        System.out.println(pokemonAdded);
+        List<Pokemon> pokemonAdded = user.getFavoritePokemonList();
+        if (pokemonAdded.isEmpty()) {
+            user.addFavoritePokemon(pokemon);
+//            System.out.println("Pokemon: " + " " + pokemon);
+//            System.out.println("PokemonIdCheck: " + " " + pokemonIdCheck);
+        } else {
+            System.out.println(pokemonAdded);
+//            System.out.println(user.getFavoritePokemonListSize());
+            for (int i = 0; i <= user.getFavoritePokemonListSize() - 1; i++) {
+                System.out.println(pokemonAdded.get(i));
+                System.out.println(pokemon);
+                if (pokemonAdded.get(i) == pokemon) {
+                    throw new InformationExistsException("pokemon with name " + pokemon.getName() + " already exists in this list.");
+                }
+            }
+            user.addFavoritePokemon(pokemon);
+        }
         return userRepository.save(user);
     }
 }
