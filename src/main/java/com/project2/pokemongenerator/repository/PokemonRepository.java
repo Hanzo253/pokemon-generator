@@ -9,5 +9,4 @@ public interface PokemonRepository extends JpaRepository<Pokemon, Long> {
     List<Pokemon> findByUserId(Long userId);
     Pokemon findByUserIdAndName(Long userId, String name);
     Pokemon findByIdAndUserId(Long pokemonId, Long id);
-//    Pokemon findByIdAndName(Long pokemonId, String name);
 }
