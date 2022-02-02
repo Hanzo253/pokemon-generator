@@ -41,4 +41,14 @@ public class UserController {
         System.out.println("calling loginUser");
         return userService.loginUser(loginRequest);
     }
+
+    @GetMapping("/list")
+    public Iterable<User> listUsers() {
+        return userService.listUsers();
+    }
+
+    @GetMapping("/{username}")
+    public User getUser(@PathVariable String username) {
+        return userService.getUser(username);
+    }
 }

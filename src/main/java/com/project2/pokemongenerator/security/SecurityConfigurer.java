@@ -47,7 +47,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // only allowed urls with out JWT
-        http.authorizeRequests().antMatchers("/auth/users", "/auth/users/login", "/auth/users/register").permitAll()
+        http.authorizeRequests().antMatchers("/auth/users", "/auth/users/login", "/auth/users/register", "/auth/users/list", "/auth/users/{username}").permitAll()
                 .anyRequest().authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable();
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

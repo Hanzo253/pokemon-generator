@@ -92,6 +92,10 @@ public class UserService implements FavoritePokemon {
         return userRepository.findUserByUserName(username);
     }
 
+    public Iterable<User> listUsers() {
+        return userRepository.findAll();
+    }
+
     @Override
     public User addFavoritePokemon(String username, Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
