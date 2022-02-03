@@ -29,11 +29,13 @@ public class PokemonService {
         this.userService = userService;
     }
 
+    // generate the pokemon
     public Pokemon createPokemon(Pokemon pokemonObject) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByUserIdAndName(userDetails.getUser().getId(), pokemonObject.getName());
 
         if (pokemon != null) {
+            // throw exception if the pokemon already exists
             throw new InformationExistsException("pokemon with name " + pokemon.getName() + " already exists.");
         } else {
             pokemonObject.setUser(userDetails.getUser());
@@ -41,34 +43,41 @@ public class PokemonService {
         }
     }
 
+    // returns all the pokemon in the pokemon table
     public List<Pokemon> getAllPokemon() {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Pokemon> pokemons = pokemonRepository.findByUserId(userDetails.getUser().getId());
 
         if (pokemons.isEmpty()) {
+            // throw exception when the pokemon list is empty
             throw new InformationNotFoundException("no pokemon found for user id " + userDetails.getUser().getId() + " not found.");
         } else {
             return pokemons;
         }
     }
 
+    // returns a single pokemon based on the pokemon id
     public Optional<Pokemon> getPokemon(Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
         if (pokemon == null) {
+            // throw exception if the pokemon id does not exist
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
         } else {
             return Optional.ofNullable(pokemon);
         }
     }
 
+    // updates the pokemon's information
     public Pokemon updatePokemon(Long pokemonId, @RequestBody Pokemon pokemonObject) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
 
         if (pokemon == null) {
+            // throw exception if the pokemon id does not exist
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found");
         } else {
+            // updates the following columns/fields
             pokemon.setUser(userDetails.getUser());
             pokemon.setName(pokemonObject.getName());
             pokemon.setType(pokemonObject.getType());
@@ -82,22 +91,27 @@ public class PokemonService {
         }
     }
 
+    // updates only the pokemon's moves
     public Pokemon updatePokemonMoves(Long pokemonId, @RequestBody Pokemon pokemonObject) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
 
         if (pokemon == null) {
+            // throw exception if the pokemon id does not exist
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found");
         } else {
+            // updates the moves array
             pokemon.setMoves(pokemonObject.getMoves());
             return pokemonRepository.save(pokemon);
         }
     }
 
+    // deletes the pokemon based on the pokemon id given
     public void deletePokemon(Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
         if (pokemon == null) {
+            // throw exception if the pokemon id does not exist
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
         } else {
             pokemonRepository.deleteById(pokemonId);

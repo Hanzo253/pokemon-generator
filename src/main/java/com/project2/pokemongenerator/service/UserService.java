@@ -73,6 +73,7 @@ public class UserService implements FavoritePokemon {
             userObject.setPassword(passwordEncoder.encode(userObject.getPassword()));
             return userRepository.save(userObject);
         } else {
+            // throw exception if the user already exists
             throw new InformationExistsException("user with email address " + userObject.getEmailAddress() + " already exists.");
         }
     }
@@ -81,13 +82,16 @@ public class UserService implements FavoritePokemon {
     public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
+        System.out.println(userDetails);
         final String JWT = jwtUtils.generateToken(userDetails);
         return ResponseEntity.ok(new LoginResponse(JWT));
     }
 
+    // changes the user's password
     public User changePassword(@RequestBody User userObject, String username) {
         User user = userRepository.findUserByUserName(username);
         if (user == null) {
+            // throw exception if the user does not exist
             throw new InformationNotFoundException("user with username " + username + " not found.");
         } else {
 //            System.out.println(user);
@@ -97,32 +101,40 @@ public class UserService implements FavoritePokemon {
         }
     }
 
+    // locates user by their email address
     public User findUserByEmailAddress(String email) {
         return userRepository.findUserByEmailAddress(email);
     }
 
+    // getter for the user
     @Override
     public User getUser(String username) {
         if (userRepository.findUserByUserName(username) == null) {
+            // throw exception if the user does not exist
             throw new InformationNotFoundException("User not found.");
         } else {
             return userRepository.findUserByUserName(username);
         }
     }
 
+    // returns a list of all users in the users database
     public Iterable<User> listUsers() {
         if (userRepository.findAll().size() == 0) {
+            // throw exception if there are no users in the list
             throw new InformationNotFoundException("No users found.");
         } else {
             return userRepository.findAll();
         }
     }
 
+    // deletes the user by their id
     public void deleteUserById(Long userId) {
         if (userRepository.findById(userId).isEmpty()) {
+            // throw exception if the user does not exist
             throw new InformationNotFoundException("User not found.");
         } else {
             if (!userRepository.findById(userId).get().getPokemonList().isEmpty()) {
+                // throw exception if the user does not have an empty pokemonList
                 throw new InformationExistsException("User needs to empty their pokemonList and favoritePokemonList in order to be deleted");
             } else {
                 userRepository.deleteById(userId);
@@ -130,33 +142,38 @@ public class UserService implements FavoritePokemon {
         }
     }
 
+    // adds a pokemon to a user's favorite pokemon list
     @Override
     public User addFavoritePokemon(String username, Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
         if (pokemon == null) {
+            // throw exception if the pokemon id does not exist
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
         }
 //        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
         User user = getUser(username);
         if (user == null) {
+            // throw exception if the user does not have an empty pokemonList
             throw new InformationNotFoundException("username of " + username + " not found.");
         }
         if (pokemon.getUser().getUserName() != user.getUserName()) {
+            // throw exception if the user does not own this pokemon
             throw new IncorrectUserException("This pokemon does not belong to the user " + username);
         }
-        List<Pokemon> pokemonAdded = user.getFavoritePokemonList();
+        List<Pokemon> pokemonAdded = user.getFavoritePokemonList(); // pokemon added to the favorite pokemon list
         if (pokemonAdded.isEmpty()) {
             user.addFavoritePokemon(pokemon);
 //            System.out.println("Pokemon: " + " " + pokemon);
 //            System.out.println("PokemonIdCheck: " + " " + pokemonIdCheck);
         } else {
-            System.out.println(pokemonAdded);
+//            System.out.println(pokemonAdded);
 //            System.out.println(user.getFavoritePokemonListSize());
             for (int i = 0; i <= user.getFavoritePokemonListSize() - 1; i++) {
-                System.out.println(pokemonAdded.get(i));
-                System.out.println(pokemon);
+//                System.out.println(pokemonAdded.get(i));
+//                System.out.println(pokemon);
                 if (pokemonAdded.get(i) == pokemon) {
+                    // throw exception if the pokemon is already in the favorite pokemon list
                     throw new InformationExistsException("pokemon with name " + pokemon.getName() + " already exists in this list.");
                 }
             }
