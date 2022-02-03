@@ -86,25 +86,15 @@ public class UserService implements FavoritePokemon {
     }
 
     public User changePassword(@RequestBody User userObject, String username) {
-//        if (userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
-//            System.out.println(userObject.getPassword());
-//            User user = getUser(username);
-////            userObject.setPassword("123");
-////            System.out.println(user);
-//            user.setPassword(passwordEncoder.encode(userObject.getPassword()));
-//            return userRepository.save(userObject);
-//        } else {
-//            throw new InformationNotFoundException("user with email address " + userObject.getEmailAddress() + " not found.");
-//        }
-//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findUserByUserName(username);
-        System.out.println(userObject.getPassword());
-//        User user = userRepository.findUserByUserName(username);
-//        System.out.println(user.getEmailAddress());
-//        user.setEmailAddress(user.getEmailAddress());
-        user.setPassword(passwordEncoder.encode(userObject.getPassword()));
-//        System.out.println(user.getPassword());
-        return userRepository.save(user);
+        if (user == null) {
+            throw new InformationNotFoundException("user with username " + username + " not found.");
+        } else {
+//            System.out.println(user);
+//            System.out.println(userObject.getPassword());
+            user.setPassword(passwordEncoder.encode(userObject.getPassword()));
+            return userRepository.save(user);
+        }
     }
 
     public User findUserByEmailAddress(String email) {
