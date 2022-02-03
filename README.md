@@ -123,6 +123,24 @@ The app has a registration and login feature that uses JSON web tokens for authe
 |           Postgres           |
 |            Google            |
 
+## Endpoints
+
+| ENDPOINT                                | FUNCTIONALITY                                       |
+|-----------------------------------------|:----------------------------------------------------|
+| POST _/auth/users/register_             | Register a User                                     |
+| POST _/auth/users/login_                | Log in as User                                      |
+| GET _/auth/users/list_                  | GET All Users                                       |
+| GET _/auth/users/{username}_            | GET A User                                          |
+| PUT _/auth/users/changepassword_        | UPDATE the password                                 |
+| DELETE _/auth/users/delete_             | DELETE user account                                 |
+| POST _/api/pokemon/_                    | CREATE A Pokemon                                    |
+| GET _/api/pokemon/_                     | GET All Pokemon                                     |
+| GET _/api/pokemon/{pokemonId}_          | GET A Pokemon                                       |
+| PUT _/api/pokemon/{pokemonId}_          | UPDATE A Pokemon                                    |
+| PUT _/api/pokemon/{pokemonId}/moves_    | UPDATE A Pokemon's moves                            |
+| PUT _/api/pokemon/{pokemonId}/favorite_ | Add pokemon to current user's favorite pokemon list |
+| DELETE _/api/pokemon/{pokemonId}_       | DELETE A Pokemon                                    |
+
 ## If I had more time, I would change this
 
 ### Original Project Entity Relationship Diagram (ERD)
