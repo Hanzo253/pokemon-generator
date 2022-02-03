@@ -58,9 +58,9 @@ public class PokemonController {
         return pokemonService.updatePokemonMoves(pokemonId, pokemonObject);
     }
 
-    @PutMapping("/pokemon/{pokemonId}/{username}")
-    public User addFavoritePokemon(@PathVariable String username, @PathVariable Long pokemonId) {
-        return userService.addFavoritePokemon(username, pokemonId);
+    @PutMapping("/pokemon/{pokemonId}/favorite")
+    public User addFavoritePokemon(@PathVariable Long pokemonId) {
+        return userService.addFavoritePokemon(pokemonId);
     }
 
     @DeleteMapping("/pokemon/{pokemonId}")

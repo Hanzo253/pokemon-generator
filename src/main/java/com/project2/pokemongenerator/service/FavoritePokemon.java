@@ -8,5 +8,5 @@ public interface FavoritePokemon {
     public User getUser(String username);
 
     // add favorite pokemon with pokemon id and username
-    public User addFavoritePokemon(String username, Long pokemonId);
+    public User addFavoritePokemon(Long pokemonId);
 }

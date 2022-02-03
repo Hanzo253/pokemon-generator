@@ -43,7 +43,7 @@ public class PokemonService {
         }
     }
 
-    // returns all the pokemon in the pokemon table
+    // returns all the user's pokemon
     public List<Pokemon> getAllPokemon() {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<Pokemon> pokemons = pokemonRepository.findByUserId(userDetails.getUser().getId());
@@ -56,7 +56,7 @@ public class PokemonService {
         }
     }
 
-    // returns a single pokemon based on the pokemon id
+    // returns a user's pokemon based on the pokemon id
     public Optional<Pokemon> getPokemon(Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
@@ -106,7 +106,7 @@ public class PokemonService {
         }
     }
 
-    // deletes the pokemon based on the pokemon id given
+    // deletes a user's pokemon based on the pokemon id given
     public void deletePokemon(Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());

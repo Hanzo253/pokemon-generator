@@ -92,8 +92,6 @@ public class UserService implements FavoritePokemon {
     public User changePassword(@RequestBody User userObject) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findUserByUserName(userDetails.getUser().getUserName());
-        System.out.println("User: " + user);
-        System.out.println("UserDetails: " + userDetails);
         if (user == null) {
             // throw exception if the user does not exist
             throw new InformationNotFoundException("User not found.");
@@ -150,7 +148,7 @@ public class UserService implements FavoritePokemon {
 
     // adds a pokemon to a user's favorite pokemon list
     @Override
-    public User addFavoritePokemon(String username, Long pokemonId) {
+    public User addFavoritePokemon(Long pokemonId) {
         MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Pokemon pokemon = pokemonRepository.findByIdAndUserId(pokemonId, userDetails.getUser().getId());
         if (pokemon == null) {
@@ -158,14 +156,14 @@ public class UserService implements FavoritePokemon {
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
         }
 //        Pokemon pokemon = pokemonRepository.findById(pokemonId).get();
-        User user = getUser(username);
+        User user = getUser(userDetails.getUser().getUserName());
         if (user == null) {
             // throw exception if the user does not have an empty pokemonList
-            throw new InformationNotFoundException("username of " + username + " not found.");
+            throw new InformationNotFoundException("username of " + userDetails.getUser().getUserName() + " not found.");
         }
         if (pokemon.getUser().getUserName() != user.getUserName()) {
             // throw exception if the user does not own this pokemon
-            throw new IncorrectUserException("This pokemon does not belong to the user " + username);
+            throw new IncorrectUserException("This pokemon does not belong to the user " + userDetails.getUser().getUserName());
         }
         List<Pokemon> pokemonAdded = user.getFavoritePokemonList(); // pokemon added to the favorite pokemon list
         if (pokemonAdded.isEmpty()) {
