@@ -53,6 +53,11 @@ public class UserController {
         return userService.getUser(username);
     }
 
+    @PutMapping("/{username}/changepassword")
+    public User changePassword(@RequestBody User userObject, @PathVariable(value = "username") String username) {
+        return userService.changePassword(userObject, username);
+    }
+
     @DeleteMapping("/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUserById(userId);

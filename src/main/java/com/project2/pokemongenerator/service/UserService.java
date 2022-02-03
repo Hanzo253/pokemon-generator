@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,11 +78,33 @@ public class UserService implements FavoritePokemon {
     }
 
     // checks if user login information is correct and returns the jwt key
-    public ResponseEntity<?> loginUser(LoginRequest loginRequest){
+    public ResponseEntity<?> loginUser(LoginRequest loginRequest) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginRequest.getEmail());
         final String JWT = jwtUtils.generateToken(userDetails);
         return ResponseEntity.ok(new LoginResponse(JWT));
+    }
+
+    public User changePassword(@RequestBody User userObject, String username) {
+//        if (userRepository.existsByEmailAddress(userObject.getEmailAddress())) {
+//            System.out.println(userObject.getPassword());
+//            User user = getUser(username);
+////            userObject.setPassword("123");
+////            System.out.println(user);
+//            user.setPassword(passwordEncoder.encode(userObject.getPassword()));
+//            return userRepository.save(userObject);
+//        } else {
+//            throw new InformationNotFoundException("user with email address " + userObject.getEmailAddress() + " not found.");
+//        }
+//        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findUserByUserName(username);
+        System.out.println(userObject.getPassword());
+//        User user = userRepository.findUserByUserName(username);
+//        System.out.println(user.getEmailAddress());
+//        user.setEmailAddress(user.getEmailAddress());
+        user.setPassword(passwordEncoder.encode(userObject.getPassword()));
+//        System.out.println(user.getPassword());
+        return userRepository.save(user);
     }
 
     public User findUserByEmailAddress(String email) {
