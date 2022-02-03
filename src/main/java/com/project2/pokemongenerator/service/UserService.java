@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements FavoritePokemon {
@@ -88,11 +89,14 @@ public class UserService implements FavoritePokemon {
     }
 
     // changes the user's password
-    public User changePassword(@RequestBody User userObject, String username) {
-        User user = userRepository.findUserByUserName(username);
+    public User changePassword(@RequestBody User userObject) {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userRepository.findUserByUserName(userDetails.getUser().getUserName());
+        System.out.println("User: " + user);
+        System.out.println("UserDetails: " + userDetails);
         if (user == null) {
             // throw exception if the user does not exist
-            throw new InformationNotFoundException("user with username " + username + " not found.");
+            throw new InformationNotFoundException("User not found.");
         } else {
 //            System.out.println(user);
 //            System.out.println(userObject.getPassword());
@@ -128,16 +132,18 @@ public class UserService implements FavoritePokemon {
     }
 
     // deletes the user by their id
-    public void deleteUserById(Long userId) {
-        if (userRepository.findById(userId).isEmpty()) {
+    public void deleteUserById() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Optional<User> user = userRepository.findById(userDetails.getUser().getId());
+        if (user.isEmpty()) {
             // throw exception if the user does not exist
             throw new InformationNotFoundException("User not found.");
         } else {
-            if (!userRepository.findById(userId).get().getPokemonList().isEmpty()) {
+            if (!user.get().getPokemonList().isEmpty()) {
                 // throw exception if the user does not have an empty pokemonList
                 throw new InformationExistsException("User needs to empty their pokemonList and favoritePokemonList in order to be deleted");
             } else {
-                userRepository.deleteById(userId);
+                userRepository.deleteById(userDetails.getUser().getId());
             }
         }
     }

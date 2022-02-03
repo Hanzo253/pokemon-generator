@@ -4,7 +4,6 @@ import com.project2.pokemongenerator.model.Request.LoginRequest;
 import com.project2.pokemongenerator.model.User;
 import com.project2.pokemongenerator.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,14 +52,14 @@ public class UserController {
         return userService.getUser(username);
     }
 
-    @PutMapping("/{username}/changepassword")
-    public User changePassword(@RequestBody User userObject, @PathVariable(value = "username") String username) {
-        return userService.changePassword(userObject, username);
+    @PutMapping("/changepassword")
+    public User changePassword(@RequestBody User userObject) {
+        return userService.changePassword(userObject);
     }
 
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        userService.deleteUserById(userId);
-        return ResponseEntity.ok().body("Deleting user with id " + userId);
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteUser() {
+        userService.deleteUserById();
+        return ResponseEntity.ok().body("Deleting user...");
     }
 }
