@@ -32,27 +32,27 @@ The app has a registration and login feature that uses JSON web tokens for authe
 
 1. Users(trainers) will be able to create their own pokémon.
 
-| Acceptance Criteria                                                                                                |
-|--------------------------------------------------------------------------------------------------------------------|
-| Given - The user want to add a pokémon to the pokemon database                                                     |
-| When -  The user needs to add the information of the pokémon they want to create                                   |
-| Then - After the user is finished writing the information of the pokémon, their pokémon gets added to the database |
+| Acceptance Criteria                                                                                                  |
+|----------------------------------------------------------------------------------------------------------------------|
+| Given - The user want to add a pokémon to the pokemon database                                                       |
+| When -  The user needs to add the information of the pokémon they want to create                                     |
+| Then - After the user is finished inputting the information of the pokémon, their pokémon gets added to the database |
 
 2. As a user, I can view only the pokémon.
 
-| Acceptance Criteria                                                             |
-|---------------------------------------------------------------------------------|
-| Given - The user wants to look what pokemon they have in their pokemon database |
-| When -  The user sends a GET request to see all the pokemon in their database   |
-| Then - Every pokemon and their information from the database is returned        |
+| Acceptance Criteria                                                                        |
+|--------------------------------------------------------------------------------------------|
+| Given - The user wants to look what pokemon they have in their pokemon database            |
+| When -  The user sends a GET request to see all the pokemon in their database              |
+| Then - Every pokemon owned by the user and their information from the database is returned |
 
 3. As a user, I can pick my favorite pokémon and view them.
 
-| Acceptance Criteria                                                             |
-|---------------------------------------------------------------------------------|
-| Given - The user wants to look what pokemon they have in their pokemon database |
-| When -  The user sends a GET request to see all the pokemon in their database   |
-| Then - Every pokemon and their information from the database is returned        |
+| Acceptance Criteria                                                                        |
+|--------------------------------------------------------------------------------------------|
+| Given - The user wants to add a pokemon into their favorites                               |
+| When -  The user sends a PUT request to add their pokemon into their favorite pokemon list |
+| Then - the updated favorite pokemon list is returned                                       |
 
 4. As a user, I can view all of my pokémon databases (Pokemon and Favorite Pokemon)
 
@@ -86,7 +86,7 @@ The app has a registration and login feature that uses JSON web tokens for authe
 | When -  The user inputs the email address and password of their registered account                 |
 | Then - When the account information is correct, the user is logged in and has access to the tables |
 
-8. As a user, I can release(delete) pokemon.
+8. As a user, I can release(delete) pokémon.
 
 | Acceptance Criteria                                                            |
 |--------------------------------------------------------------------------------|
@@ -102,7 +102,7 @@ The app has a registration and login feature that uses JSON web tokens for authe
 | When -  The user sends a GET request with a pokemon's id                        |
 | Then - The pokemon that has the corresponding id has their information returned |
 
-10. As a user, I can update any of my pokémon's information except moves
+10. As a user, I can update any of my pokémon's information
 
 | Acceptance Criteria                                                              |
 |----------------------------------------------------------------------------------|
@@ -140,6 +140,7 @@ The app has a registration and login feature that uses JSON web tokens for authe
 | PUT _/api/pokemon/{pokemonId}/moves_    | UPDATE A Pokemon's moves                            |
 | PUT _/api/pokemon/{pokemonId}/favorite_ | Add pokemon to current user's favorite pokemon list |
 | DELETE _/api/pokemon/{pokemonId}_       | DELETE A Pokemon                                    |
+| DELETE _/api/pokemon/_                  | DELETE ALL Pokemon                                  |
 
 ## If I had more time, I would change this
 
@@ -152,8 +153,9 @@ The app has a registration and login feature that uses JSON web tokens for authe
 - If the user updated the pokémon and set its isFavorite boolean value to true, then it would be stored in the Favorited Pokemon table.
 
 ## Project Challenges
-
-- Implementing the feature where a user can add a pokémon to their favorite pokemon list
-- Setting up the authentication web tokens
-- Allowing the user to change their password
-- Deleting the user account
+1. Implementing the feature where a user can add a pokémon to their favorite pokemon list
+- I had a difficult time dealing with the exceptions for this feature because I had some trouble handling the exception when the pokémon does not belong to the user. I solved this problem by comparing usernames because each pokémon is owned by a user, so the owner's username and the username of the user trying to add the pokémon into their favorites can be compared to make sure it s the correct user. I also had to find a solution that prevents duplicate pokémon from being added to the favorite pokémon list. I made a solution for this by grabbing the list of the user's favorite pokémon and comparing each pokémon in it with the pokémon that is being added to check if the same pokémon is already in there.
+2. Allowing the user to change their password
+- I could not figure out how to update an encrypted password at first because I thought I needed to decode the encrypted password and then change it. After I thought about it some more, I end up with a solution of getting the input of the new password and set its encrypted version as the new password.  
+3. Deleting the user account
+- I tried implementing a method that could delete the list and the user account all together, but I was not able to do it. Instead, I just created an exception handler that throws when the user does not have an empty pokemon list. Therefore, when the user sees that their list is not empty, then they can use my deleteAllPokemon request to clear their lists and delete the account.

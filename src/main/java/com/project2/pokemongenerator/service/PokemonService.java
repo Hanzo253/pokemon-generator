@@ -50,7 +50,7 @@ public class PokemonService {
 
         if (pokemons.isEmpty()) {
             // throw exception when the pokemon list is empty
-            throw new InformationNotFoundException("no pokemon found for user id " + userDetails.getUser().getId() + " not found.");
+            throw new InformationNotFoundException("no pokemon found for user id " + userDetails.getUser().getId());
         } else {
             return pokemons;
         }
@@ -115,6 +115,19 @@ public class PokemonService {
             throw new InformationNotFoundException("pokemon with id " + pokemonId + " not found.");
         } else {
             pokemonRepository.deleteById(pokemonId);
+        }
+    }
+
+    // delete all the user's pokemon
+    public void deleteAllPokemon() {
+        MyUserDetails userDetails = (MyUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<Pokemon> pokemons = pokemonRepository.findByUserId(userDetails.getUser().getId());
+
+        if (pokemons.isEmpty()) {
+            // throw exception when the pokemon list is empty
+            throw new InformationNotFoundException("no pokemon found for user id " + userDetails.getUser().getId());
+        } else {
+            pokemonRepository.deleteAll();
         }
     }
 }

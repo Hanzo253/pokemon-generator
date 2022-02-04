@@ -69,4 +69,11 @@ public class PokemonController {
         pokemonService.deletePokemon(pokemonId);
         return ResponseEntity.ok().body("Deleting pokemon with id " + pokemonId);
     }
+
+    @DeleteMapping("/pokemon/")
+    public ResponseEntity<String> deletePokemon() {
+        System.out.println("deleting all pokemon...");
+        pokemonService.deleteAllPokemon();
+        return ResponseEntity.ok().body("Deleting all pokemon...");
+    }
 }
