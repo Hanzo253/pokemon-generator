@@ -81,7 +81,6 @@ public class PokemonService {
             pokemon.setUser(userDetails.getUser());
             pokemon.setName(pokemonObject.getName());
             pokemon.setType(pokemonObject.getType());
-            pokemon.setGender(pokemonObject.getGender());
             pokemon.setGeneration(pokemonObject.getGeneration());
             pokemon.setMoves(pokemonObject.getMoves());
             pokemon.setIsLegendary(pokemonObject.getIsLegendary());

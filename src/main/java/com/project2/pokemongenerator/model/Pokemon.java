@@ -26,9 +26,6 @@ public class Pokemon {
     private String type;
 
     @Column
-    private String gender;
-
-    @Column
     private int generation;
 
     @Type(type = "string-array")
@@ -58,11 +55,10 @@ public class Pokemon {
 
     }
 
-    public Pokemon(Long id, String name, String type, String gender, int generation, String[] moves, boolean isLegendary, boolean isShiny, String pokemonImage) {
+    public Pokemon(Long id, String name, String type, int generation, String[] moves, boolean isLegendary, boolean isShiny, String pokemonImage) {
         this.id = id;
         this.name = name;
         this.type = type;
-        this.gender = gender;
         this.generation = generation;
         this.moves = moves;
         this.isLegendary = isLegendary;
@@ -92,14 +88,6 @@ public class Pokemon {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
     }
 
     public int getGeneration() {
@@ -164,7 +152,6 @@ public class Pokemon {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", type='" + type + '\'' +
-                ", gender='" + gender + '\'' +
                 ", generation=" + generation +
                 ", moves=" + Arrays.toString(moves) +
                 ", isLegendary=" + isLegendary +
