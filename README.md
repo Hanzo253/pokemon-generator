@@ -86,7 +86,7 @@ The app has a registration and login feature that uses JSON web tokens for authe
 | When -  The user inputs the email address and password of their registered account                 |
 | Then - When the account information is correct, the user is logged in and has access to the tables |
 
-8. As a user, I can release(delete) pokémon.
+8. As a user, I can release(delete) a pokémon.
 
 | Acceptance Criteria                                                            |
 |--------------------------------------------------------------------------------|
@@ -109,6 +109,30 @@ The app has a registration and login feature that uses JSON web tokens for authe
 | Given - The user wants to change one or more of the pokemon's fields             |
 | When - When the user sends a PUT request to update                               |
 | Then - The new information of the pokemon is returned and stored in the database |
+
+11. As a user, I can release(delete) all of my pokémon
+
+| Acceptance Criteria                                                                        |
+|--------------------------------------------------------------------------------------------|
+| Given - The user wants to get rid of all his pokemon                                       |
+| When - When the user sends a DELETE request to delete all of the pokemon in their database |
+| Then - All pokemon in both pokemon list and favorite pokemon list are cleared              |
+
+12. As a user, I can change my password
+
+| Acceptance Criteria                                                                    |
+|----------------------------------------------------------------------------------------|
+| Given - The user wants to use a different password to login                            |
+| When - When the user sends a PUT request to update his current password with a new one |
+| Then - The new password will be encrypted and replace the current password             |
+
+13. As a user, I can delete my own account
+
+| Acceptance Criteria                                                                    |
+|----------------------------------------------------------------------------------------|
+| Given - The user wants delete their account because they do not want to use it anymore |
+| When - When the user sends a DELETE request for account deletion                       |
+| Then - The user account will be erased from the database and completely deleted        |
 
 ### System Tools
 
