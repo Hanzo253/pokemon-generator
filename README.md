@@ -141,7 +141,7 @@ The app has a registration and login feature that uses JSON web tokens for authe
 |         Spring Boot          |
 |         Apache Maven         |
 |           Postman            |
-|          Lucid App           |
+|         LucidCharts          |
 | IntelliJ IDEA/Java 11 and 17 |
 |       Json Web Tokens        |
 |           Postgres           |
